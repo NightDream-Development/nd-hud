@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>nd-hud</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        health: '#4dc46b',
+                        armor: '#417aa0',
+                        hunger: '#986cc0',
+                        thirst: '#73f6ff',
+                        stress: '#cc245f',
+                        stamina: '#439959',
+                        fuel: '#ffc400'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="overflow-hidden">
+    <div id="app">
+        <div class="fixed bottom-1 left-1/2 -translate-x-1/2 flex items-end space-x-2 transition-opacity duration-500"
+             :style="{ opacity: hudVisible ? 1 : 0 }">
+            
+            <!-- Fuel HUD -->
+            <div v-show="fuelHudVisible" class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-gas-pump absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-fuel transition-all duration-100" :style="{ width: fuel + '%' }"></div>
+            </div>
+
+            <!-- Health HUD -->
+            <div class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-heart absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-health transition-all duration-100" :style="{ width: health + '%' }"></div>
+            </div>
+
+            <!-- Voice HUD -->
+            <div class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i :class="['absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg', voiceIcon]"></i>
+                <div class="h-full transition-all duration-100" 
+                     :style="{ width: voice + '%', backgroundColor: voiceColor }"></div>
+            </div>
+
+            <!-- Stress HUD -->
+            <div v-show="stressVisible" class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-brain absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-stress transition-all duration-100" :style="{ width: stress + '%' }"></div>
+            </div>
+
+            <!-- Armor HUD -->
+            <div v-show="!armourOff" class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-shield absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-armor transition-all duration-100" :style="{ width: armour + '%' }"></div>
+            </div>
+
+            <!-- Hunger HUD -->
+            <div class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-drumstick-bite absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-hunger transition-all duration-100" :style="{ width: hunger + '%' }"></div>
+            </div>
+
+            <!-- Thirst HUD -->
+            <div class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-glass-water absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-thirst transition-all duration-100" :style="{ width: thirst + '%' }"></div>
+            </div>
+
+            <!-- Stamina HUD -->
+            <div v-show="staminaVisible" class="relative w-8 h-2 bg-black/60 border border-black shadow-lg">
+                <i class="fa-solid fa-person-running absolute -top-8 left-1/2 -translate-x-1/2 text-white/80 drop-shadow-lg"></i>
+                <div class="h-full bg-stamina transition-all duration-100" :style="{ width: stamina + '%' }"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
